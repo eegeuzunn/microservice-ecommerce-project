@@ -14,7 +14,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    protected Category getById(String id) {
-        return categoryRepository.findById(Long.parseLong(id)).orElseThrow(() -> new EntityNotFoundException("Category not found"));
+    protected Category getById(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 }

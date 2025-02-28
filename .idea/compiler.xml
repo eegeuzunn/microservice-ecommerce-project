@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="product-service" />
+        <module name="cart-service" />
         <module name="config-service" />
         <module name="eureka-server" />
         <module name="customer-service" />
@@ -22,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateaway-proxy" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
+      <module name="cart-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="eureka-server" options="-parameters" />

@@ -1,5 +1,6 @@
-package com.productservice.dto;
+package com.productservice.dto.converter;
 
+import com.productservice.dto.ProductDto;
 import com.productservice.model.Product;
 import org.springframework.stereotype.Component;
 

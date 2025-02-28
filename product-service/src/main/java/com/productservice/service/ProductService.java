@@ -1,6 +1,6 @@
 package com.productservice.service;
 
-import com.productservice.dto.ProductConverter;
+import com.productservice.dto.converter.ProductConverter;
 import com.productservice.dto.ProductDto;
 import com.productservice.dto.ProductPostRequest;
 import com.productservice.model.Category;
@@ -27,13 +27,13 @@ public class ProductService {
         this.categoryService = categoryService;
     }
 
-    public ProductDto getById(String id) {
-        Product product = productRepository.findById(Long.parseLong(id)).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+    public ProductDto getById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
         return productConverter.toProductDto(product);
     }
 
-    public List<ProductDto> getByCategoryId(String categoryId) {
-        List<Product> products = productRepository.findByCategoryId(Long.parseLong(categoryId));
+    public List<ProductDto> getByCategoryId(Long categoryId) {
+        List<Product> products = productRepository.findByCategoryId(categoryId);
 
         if(products.isEmpty()) {
             throw new EntityNotFoundException("Products not found");
@@ -42,7 +42,7 @@ public class ProductService {
         return products.stream().map(productConverter::toProductDto).collect(Collectors.toList());
     }
 
-    public URI addProduct(ProductPostRequest productPostRequest, String categoryId) {
+    public URI addProduct(ProductPostRequest productPostRequest, Long categoryId) {
         Product product = new Product();
         product.setName(productPostRequest.getName());
         product.setDescription(productPostRequest.getDescription());
@@ -58,8 +58,8 @@ public class ProductService {
                 .toUri();
     }
 
-    public void deleteProduct(String id) {
-        Product product = productRepository.findById(Long.parseLong(id)).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
         productRepository.delete(product);
     }
 }
