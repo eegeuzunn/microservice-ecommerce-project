@@ -3,6 +3,7 @@ package com.cartservice.service;
 import com.cartservice.dto.CartDto;
 import com.cartservice.dto.ProductDto;
 import com.cartservice.dto.converter.CartConverter;
+import com.cartservice.exception.CartNotAvailableException;
 import com.cartservice.exception.CartNotFoundException;
 import com.cartservice.exception.ProductNotFoundException;
 import com.cartservice.feignClient.ProductServiceClient;
@@ -29,17 +30,22 @@ public class CartService {
 
     public CartDto getCart(Long customerId) {
         if(!cartRepository.existsByCustomerId(customerId)) {
-            return cartConverter.convertCartToDto(cartRepository.save(new Cart(customerId, null)));
+            return cartConverter.convertCartToDto(cartRepository.save(new Cart(customerId, false, null)));
         }
         return cartConverter.convertCartToDto(cartRepository.findByCustomerId(customerId).get());
     }
 
     public void addProductToCart(Long customerId, Long productId) {
+
         Cart cart;
         if(!cartRepository.existsByCustomerId(customerId)) {
-            cart = cartRepository.save(new Cart(customerId, null));
+            cart = cartRepository.save(new Cart(customerId, false, null));
         } else {
             cart = cartRepository.findByCustomerId(customerId).get();
+        }
+
+        if(cart.isOnPayment()){
+            throw new CartNotAvailableException("Cart is not available, it is on payment");
         }
 
         ProductDto product = productServiceClient.getProductById(productId).getBody();
@@ -59,6 +65,11 @@ public class CartService {
         }
 
         Cart cart = cartRepository.findByCustomerId(userId).get();
+
+        if(cart.isOnPayment()){
+            throw new CartNotAvailableException("Cart is not available, it is on payment");
+        }
+
         CartItem cartItem = cartItemRepository.findByProductIdAndCartId(productId, cart.getId()).orElseThrow(() -> new ProductNotFoundException("Product not found in cart"));
         cartItemRepository.delete(cartItem);
     }

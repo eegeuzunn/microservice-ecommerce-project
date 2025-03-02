@@ -14,21 +14,33 @@ public class Cart {
     @Column(name = "customer_id")
     private Long customerId;
 
+    private boolean isOnPayment;
+
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
 
     public Cart() {
     }
 
-    public Cart(Long customerId, List<CartItem> cartItems) {
+    public Cart(Long customerId, boolean isOnPayment, List<CartItem> cartItems) {
         this.customerId = customerId;
+        this.isOnPayment = isOnPayment;
         this.cartItems = cartItems;
     }
 
-    public Cart(Long id, Long customerId, List<CartItem> cartItems) {
+    public Cart(Long id, Long customerId, boolean isOnPayment, List<CartItem> cartItems) {
         this.id = id;
         this.customerId = customerId;
+        this.isOnPayment = isOnPayment;
         this.cartItems = cartItems;
+    }
+
+    public boolean isOnPayment() {
+        return isOnPayment;
+    }
+
+    public void setOnPayment(boolean onPayment) {
+        isOnPayment = onPayment;
     }
 
     public Long getId() {
