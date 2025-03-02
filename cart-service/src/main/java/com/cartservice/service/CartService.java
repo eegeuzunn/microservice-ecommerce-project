@@ -73,4 +73,24 @@ public class CartService {
         CartItem cartItem = cartItemRepository.findByProductIdAndCartId(productId, cart.getId()).orElseThrow(() -> new ProductNotFoundException("Product not found in cart"));
         cartItemRepository.delete(cartItem);
     }
+
+    public Boolean getPaymentStatus(Long cartId) {
+        if(!cartRepository.existsById(cartId)) {
+            throw new CartNotFoundException("Cart not found");
+        }
+        return cartRepository.findById(cartId).get().isOnPayment();
+    }
+
+    public void changePaymentStatus(Long cartId, String isOnPayment) {
+        if(!cartRepository.existsById(cartId)) {
+            throw new CartNotFoundException("Cart not found");
+        }
+        Cart cart = cartRepository.findById(cartId).get();
+        if(isOnPayment.equals("true") && !cart.isOnPayment()) {
+            cart.setOnPayment(true);
+        } else if(isOnPayment.equals("false") && cart.isOnPayment()) {
+            cart.setOnPayment(false);
+        }
+        cartRepository.save(cart);
+    }
 }

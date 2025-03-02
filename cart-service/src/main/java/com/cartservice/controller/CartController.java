@@ -32,4 +32,15 @@ public class CartController {
         return ResponseEntity.ok("Product removed from cart");
     }
 
+    @PatchMapping("{cartId}/paymentStatus")
+    public ResponseEntity<?> changePaymentStatus(@PathVariable Long cartId, @RequestBody String isOnPayment) {
+        cartService.changePaymentStatus(cartId, isOnPayment);
+        return ResponseEntity.ok("Payment status changed");
+    }
+
+    @GetMapping("{cartId}/paymentStatus")
+    public ResponseEntity<Boolean> getPaymentStatus(@PathVariable Long cartId) {
+        return ResponseEntity.ok(cartService.getPaymentStatus(cartId));
+    }
+
 }
