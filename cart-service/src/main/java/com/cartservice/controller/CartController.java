@@ -20,9 +20,9 @@ public class CartController {
         return ResponseEntity.ok(cartService.getCart(userId));
     }
 
-    @PostMapping("/users/{userId}/products/{productId}")
-    public ResponseEntity<String> addProductToCart(@PathVariable Long userId, @PathVariable Long productId) {
-        cartService.addProductToCart(userId, productId);
+    @PostMapping("/users/{userId}/products/{productId}/{quantity}")
+    public ResponseEntity<String> addProductToCart(@PathVariable Long userId, @PathVariable Long productId, @PathVariable(required = false) Integer quantity) {
+        cartService.addProductToCart(userId, productId, quantity);
         return ResponseEntity.ok("Product added to cart");
     }
 

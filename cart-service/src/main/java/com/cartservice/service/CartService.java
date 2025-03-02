@@ -35,7 +35,7 @@ public class CartService {
         return cartConverter.convertCartToDto(cartRepository.findByCustomerId(customerId).get());
     }
 
-    public void addProductToCart(Long customerId, Long productId) {
+    public void addProductToCart(Long customerId, Long productId, Integer quantity) {
 
         Cart cart;
         if(!cartRepository.existsByCustomerId(customerId)) {
@@ -51,7 +51,7 @@ public class CartService {
         ProductDto product = productServiceClient.getProductById(productId).getBody();
         CartItem cartItem = new CartItem(
                 product.getId(),
-                1,
+                quantity == null ? 1 : quantity,
                 product.getPrice(),
                 product.getPrice(),
                 cart
