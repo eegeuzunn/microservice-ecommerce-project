@@ -5,3 +5,4 @@ config : 8888
 customer-service: 8100
 product-service: 8150
 cart-service: 8200
+payment-service: 8250
