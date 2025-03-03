@@ -30,7 +30,7 @@ public class CartService {
 
     public CartDto getCart(Long customerId) {
         if(!cartRepository.existsByCustomerId(customerId)) {
-            return cartConverter.convertCartToDto(cartRepository.save(new Cart(customerId, false, null)));
+            return cartConverter.convertCartToDto(cartRepository.save(new Cart(null, false, 0, customerId)));
         }
         return cartConverter.convertCartToDto(cartRepository.findByCustomerId(customerId).get());
     }
@@ -39,7 +39,7 @@ public class CartService {
 
         Cart cart;
         if(!cartRepository.existsByCustomerId(customerId)) {
-            cart = cartRepository.save(new Cart(customerId, false, null));
+            cart = cartRepository.save(new Cart(null, false, 0, customerId));
         } else {
             cart = cartRepository.findByCustomerId(customerId).get();
         }
@@ -57,6 +57,8 @@ public class CartService {
                 cart
         );
         cartItemRepository.save(cartItem);
+        cart.setTotalAmount(cart.getTotalAmount() + product.getPrice()*cartItem.getQuantity());
+        cartRepository.save(cart);
     }
 
     public void deleteProductFromCart(Long userId, Long productId) {

@@ -6,14 +6,18 @@ public class CartDto {
 
     private Long id;
     private Long customerId;
+    private double totalAmount;
+    private boolean isOnPayment;
     private List<CartItemDto> cartItems;
 
     public CartDto() {
     }
 
-    public CartDto(Long id, Long customerId, List<CartItemDto> cartItems) {
+    public CartDto(Long id, Long customerId, double totalAmount, boolean isOnPayment, List<CartItemDto> cartItems) {
         this.id = id;
         this.customerId = customerId;
+        this.totalAmount = totalAmount;
+        this.isOnPayment = isOnPayment;
         this.cartItems = cartItems;
     }
 
@@ -31,6 +35,22 @@ public class CartDto {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public boolean isOnPayment() {
+        return isOnPayment;
+    }
+
+    public void setOnPayment(boolean onPayment) {
+        isOnPayment = onPayment;
     }
 
     public List<CartItemDto> getCartItems() {

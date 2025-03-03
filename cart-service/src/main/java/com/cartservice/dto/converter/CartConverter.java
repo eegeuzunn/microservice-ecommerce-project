@@ -19,6 +19,8 @@ public class CartConverter {
         return new CartDto(
                 cart.getId(),
                 cart.getCustomerId(),
+                cart.getTotalAmount(),
+                false,
                 cart.getCartItems() != null ? cart.getCartItems().stream()
                         .map(cartItemConverter::toCartItemDto)
                         .collect(Collectors.toList()): null

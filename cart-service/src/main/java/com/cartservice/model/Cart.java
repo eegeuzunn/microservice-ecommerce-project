@@ -13,6 +13,8 @@ public class Cart {
     private Long id;
     @Column(name = "customer_id")
     private Long customerId;
+    @Column(name = "total_amount")
+    private double totalAmount;
 
     private boolean isOnPayment;
 
@@ -22,17 +24,27 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Long customerId, boolean isOnPayment, List<CartItem> cartItems) {
+    public Cart(Long id, Long customerId, double totalAmount, boolean isOnPayment, List<CartItem> cartItems) {
+        this.id = id;
         this.customerId = customerId;
+        this.totalAmount = totalAmount;
         this.isOnPayment = isOnPayment;
         this.cartItems = cartItems;
     }
 
-    public Cart(Long id, Long customerId, boolean isOnPayment, List<CartItem> cartItems) {
-        this.id = id;
-        this.customerId = customerId;
-        this.isOnPayment = isOnPayment;
+    public Cart(List<CartItem> cartItems, boolean isOnPayment, double totalAmount, Long customerId) {
         this.cartItems = cartItems;
+        this.isOnPayment = isOnPayment;
+        this.totalAmount = totalAmount;
+        this.customerId = customerId;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public boolean isOnPayment() {
