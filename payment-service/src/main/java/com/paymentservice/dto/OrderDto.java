@@ -1,8 +1,5 @@
-package com.orderservice.dto;
+package com.paymentservice.dto;
 
-import com.orderservice.model.OrderItem;
-import com.orderservice.model.OrderStatus;
-import jakarta.persistence.*;
 
 import java.util.List;
 

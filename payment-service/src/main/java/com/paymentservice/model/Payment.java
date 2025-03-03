@@ -18,6 +18,12 @@ public class Payment {
     public Payment() {
     }
 
+    public Payment(Long orderId, Double amount, Long cartId) {
+        this.orderId = orderId;
+        this.amount = amount;
+        this.cartId = cartId;
+    }
+
     public Payment(Long id, Long orderId, Double amount, Long cartId) {
         this.id = id;
         this.orderId = orderId;
